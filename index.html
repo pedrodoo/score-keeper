@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Keeper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scoreboard">
+        <h1>Score Keeper</h1>
+
+        <div id="draw-message" class="draw-message" role="status" aria-live="polite">
+            Oh lordy lord, it's a draw!
+        </div>
+
+        <div class="teams">
+            <section id="team-a">
+                <h2>🚩 Benfica</h2>
+                <p><span id="score-a" aria-live="polite">0</span></p>
+                <div class="buttons">
+                    <button id="increment-a">+1</button>
+                    <button id="decrement-a">-1</button>
+                </div>
+            </section>
+
+            <section id="team-b">
+                <h2>🟩 Sporting</h2>
+                <p><span id="score-b" aria-live="polite">0</span></p>
+                <div class="buttons">
+                    <button id="increment-b">+1</button>
+                    <button id="decrement-b">-1</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
