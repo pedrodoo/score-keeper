@@ -35,7 +35,7 @@ function loadScores() {
 }
 
 function updateDrawMessage() {
-    if (scoreA === scoreB) {
+    if (scoreA === scoreB && scoreA > 0) {
         drawMessageElement.classList.add('show');
     } else {
         drawMessageElement.classList.remove('show');

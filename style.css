@@ -23,10 +23,11 @@ body {
 
 h1 {
     margin-top: 0;
-    margin-bottom: 2rem;
-    font-size: 2.1rem;
-    letter-spacing: 0.03em;
-    color: #0f172a;
+    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4b5563;
 }
 
 .teams {
@@ -42,9 +43,53 @@ section {
     background: linear-gradient(145deg, #f9fafb, #eef2ff);
 }
 
+#team-a {
+    position: relative;
+    border-color: #b91c1c;
+    background: radial-gradient(circle at top left, #fecaca, #fee2e2 30%, #fef2f2 70%);
+}
+
+#team-a::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 72px;
+    height: 48px;
+    background-image: url("https://media.slbenfica.pt/-/media/benficadp/shop/produtos/acessorios/bandeiras/bandeira-vermelha-branca-benfica.jpg?v=636779607490000000");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+
+#team-b {
+    position: relative;
+    border-color: #15803d;
+    background: radial-gradient(circle at top right, #bbf7d0, #dcfce7 30%, #f0fdf4 70%);
+}
+
+#team-b::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 72px;
+    height: 48px;
+    background:
+        linear-gradient(to bottom, #f9fafb 0%, #f9fafb 35%, #15803d 35%, #15803d 100%);
+    border-radius: 4px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+
 section h2 {
-    margin: 0 0 0.75rem;
-    font-size: 1.2rem;
+    margin: 0 0 0.5rem;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
     color: #111827;
 }
 
