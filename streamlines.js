@@ -1,6 +1,6 @@
 /**
- * TRON-style streamlines: 90° angles only, direction change ±90°,
- * horizontal streaks in top half, vertical in bottom half — no crossing.
+ * TRON-style streamlines: enter from outside one of four edges (top, bottom, left, right),
+ * make a single 90° bend inside the viewport, exit toward adjacent edge.
  */
 (function () {
   const LAYER_ID = 'streamlines-layer';
@@ -11,14 +11,12 @@
   const MIN_OPACITY = 0.2;
   const MAX_OPACITY = 0.9;
 
-  const ANGLES = [0, 90, 180, 270];
-  const H_LANES_Y = [12, 24, 36, 48];
-  const V_LANES_X = [20, 40, 60, 80];
-  const H_LANE_COUNT = H_LANES_Y.length;
-  const V_LANE_COUNT = V_LANES_X.length;
-
-  const horizontalLanesInUse = new Set();
-  const verticalLanesInUse = new Set();
+  const EDGES = [
+    { edge: 'left', angle1: 0, angle2Options: [90, 270] },
+    { edge: 'right', angle1: 180, angle2Options: [90, 270] },
+    { edge: 'top', angle1: 90, angle2Options: [0, 180] },
+    { edge: 'bottom', angle1: 270, angle2Options: [0, 180] }
+  ];
 
   function randomBetween(a, b) {
     return a + Math.random() * (b - a);
@@ -33,53 +31,33 @@
     const opacity = randomBetween(MIN_OPACITY, MAX_OPACITY);
     const glowStrength = randomBetween(0.4, 1.2);
 
-    const useHorizontal = Math.random() < 0.5;
-    let laneIndex;
+    const config = pick(EDGES);
+    const angle1 = config.angle1;
+    const angle2 = pick(config.angle2Options);
+
     let startX;
     let startY;
-    let angle1;
-    let angle2;
-
-    if (useHorizontal) {
-      const available = [];
-      for (let i = 0; i < H_LANE_COUNT; i++) {
-        if (!horizontalLanesInUse.has(i)) available.push(i);
-      }
-      if (available.length === 0) {
-        laneIndex = Math.floor(Math.random() * H_LANE_COUNT);
-      } else {
-        laneIndex = pick(available);
-      }
-      horizontalLanesInUse.add(laneIndex);
-      startX = 50;
-      startY = H_LANES_Y[laneIndex];
-      angle1 = pick([0, 180]);
-      angle2 = angle1 + pick([-90, 90]);
-      if (angle2 < 0) angle2 += 360;
-      if (angle2 >= 360) angle2 -= 360;
-    } else {
-      const available = [];
-      for (let i = 0; i < V_LANE_COUNT; i++) {
-        if (!verticalLanesInUse.has(i)) available.push(i);
-      }
-      if (available.length === 0) {
-        laneIndex = Math.floor(Math.random() * V_LANE_COUNT);
-      } else {
-        laneIndex = pick(available);
-      }
-      verticalLanesInUse.add(laneIndex);
-      startX = V_LANES_X[laneIndex];
-      startY = 55 + Math.random() * 35;
-      angle1 = pick([90, 270]);
-      angle2 = angle1 + pick([-90, 90]);
-      if (angle2 < 0) angle2 += 360;
-      if (angle2 >= 360) angle2 -= 360;
+    switch (config.edge) {
+      case 'left':
+        startX = 0;
+        startY = randomBetween(5, 95);
+        break;
+      case 'right':
+        startX = 100;
+        startY = randomBetween(5, 95);
+        break;
+      case 'top':
+        startX = randomBetween(5, 95);
+        startY = 0;
+        break;
+      case 'bottom':
+        startX = randomBetween(5, 95);
+        startY = 100;
+        break;
     }
 
     const el = document.createElement('div');
     el.className = 'streamline';
-    el.dataset.horizontal = useHorizontal ? '1' : '0';
-    el.dataset.laneIndex = String(laneIndex);
     el.style.setProperty('--streamline-duration', duration + 's');
     el.style.setProperty('--streamline-angle1', angle1 + 'deg');
     el.style.setProperty('--streamline-angle2', angle2 + 'deg');
@@ -91,23 +69,12 @@
     return el;
   }
 
-  function releaseLane(el) {
-    const isHorizontal = el.dataset.horizontal === '1';
-    const laneIndex = parseInt(el.dataset.laneIndex || '0', 10);
-    if (isHorizontal) {
-      horizontalLanesInUse.delete(laneIndex);
-    } else {
-      verticalLanesInUse.delete(laneIndex);
-    }
-  }
-
   function startLine(line) {
     const layer = document.getElementById(LAYER_ID);
     if (!layer) return;
     layer.appendChild(line);
     line.addEventListener('animationend', function onEnd() {
       line.removeEventListener('animationend', onEnd);
-      releaseLane(line);
       line.remove();
       startLine(createLine());
     });

@@ -48,6 +48,7 @@ body::before {
   height: 2px;
   margin-left: -60vmax;
   margin-top: -1px;
+  transform-origin: 50% 50%;
   background: linear-gradient(
     90deg,
     transparent,

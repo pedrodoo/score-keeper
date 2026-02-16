@@ -22,6 +22,7 @@
         font-size: 1rem;
         letter-spacing: var(--letter-spacing-normal);
         text-transform: uppercase;
+        white-space: nowrap;
         background: linear-gradient(90deg, rgba(0, 212, 255, 0.2), rgba(255, 51, 102, 0.2));
         border: 1px solid rgba(0, 212, 255, 0.5);
         color: var(--tron-text);
