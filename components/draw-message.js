@@ -5,10 +5,9 @@
       :host {
         display: block;
         position: absolute;
+        top: 100%;
         left: 50%;
-        bottom: 0;
-        transform: translate(-50%, 100%);
-        margin-top: var(--space-sm);
+        transform: translate(-50%, var(--space-md));
         visibility: hidden;
         pointer-events: none;
       }

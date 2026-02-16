@@ -73,10 +73,6 @@
         color: var(--tron-text-muted);
         text-align: center;
       }
-      .draw-message-slot {
-        position: relative;
-        min-height: 0;
-      }
       @media (max-width: 600px) {
         :host {
           padding: var(--space-xl) var(--space-lg);
@@ -95,9 +91,6 @@
       <slot name="team-a"></slot>
       <div class="vs">VS</div>
       <slot name="team-b"></slot>
-    </div>
-    <div class="draw-message-slot">
-      <slot name="draw-message"></slot>
     </div>
   `;
 
