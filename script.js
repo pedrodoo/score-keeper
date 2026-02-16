@@ -25,6 +25,17 @@
       if (teamB) teamB.setAttribute('score', scoreB);
     }
     updateDrawMessage();
+    updateGlowIntensity();
+  }
+
+  function onScoreReset() {
+    scoreA = 0;
+    scoreB = 0;
+    if (teamA) teamA.setAttribute('score', '0');
+    if (teamB) teamB.setAttribute('score', '0');
+    saveScores();
+    updateDrawMessage();
+    updateGlowIntensity();
   }
 
   function updateDrawMessage() {
@@ -39,6 +50,13 @@
     }
   }
 
+  function updateGlowIntensity() {
+    if (!board) return;
+    const diff = Math.abs(scoreA - scoreB);
+    const intensity = 1 / (1 + diff * 0.25);
+    board.style.setProperty('--glow-intensity', String(intensity));
+  }
+
   function onScoreIncrement(e) {
     if (window.audioManager) window.audioManager.playSfx('clickIncrement');
     const teamId = e.detail && e.detail.teamId;
@@ -51,6 +69,7 @@
     }
     saveScores();
     updateDrawMessage();
+    updateGlowIntensity();
   }
 
   function onScoreDecrement(e) {
@@ -69,13 +88,16 @@
     }
     saveScores();
     updateDrawMessage();
+    updateGlowIntensity();
   }
 
   if (board) {
     board.addEventListener('score-increment', onScoreIncrement);
     board.addEventListener('score-decrement', onScoreDecrement);
+    board.addEventListener('score-reset', onScoreReset);
   }
 
   loadScores();
   updateDrawMessage();
+  updateGlowIntensity();
 })();

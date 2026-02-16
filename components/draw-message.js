@@ -4,17 +4,17 @@
     <style>
       :host {
         display: none;
-        margin: var(--space-md) 0 var(--space-lg);
+        margin: var(--space-md) 0 0;
       }
       :host([visible]) {
         display: block;
       }
       .message {
-        padding: var(--space-md) var(--space-lg);
+        padding: var(--space-sm) var(--space-md);
         border-radius: var(--radius-lg);
         font-family: var(--font-display);
         font-weight: var(--text-score-weight);
-        font-size: 1.75rem;
+        font-size: 1rem;
         letter-spacing: var(--letter-spacing-normal);
         text-transform: uppercase;
         background: linear-gradient(90deg, rgba(0, 212, 255, 0.2), rgba(255, 51, 102, 0.2));

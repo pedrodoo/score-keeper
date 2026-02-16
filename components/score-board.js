@@ -7,24 +7,30 @@
         50% { text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 212, 255, 0.7); opacity: 0.95; }
       }
       @keyframes tronBorderPulse {
-        0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
-        50% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.8), 0 0 50px rgba(0, 212, 255, 0.4); }
+        0%, 100% { box-shadow: 0 0 calc(20px * var(--glow-intensity, 1)) rgba(0, 212, 255, calc(0.3 + 0.5 * var(--glow-intensity, 1))); }
+        50% { box-shadow: 0 0 calc(30px * var(--glow-intensity, 1)) rgba(0, 212, 255, calc(0.5 + 0.3 * var(--glow-intensity, 1))), 0 0 calc(50px * var(--glow-intensity, 1)) rgba(0, 212, 255, 0.4); }
       }
       :host {
         display: block;
+        --glow-intensity: 1;
         background: linear-gradient(145deg, var(--tron-bg-secondary) 0%, var(--tron-bg) 100%);
         padding: var(--scoreboard-padding);
         border-radius: var(--radius-xl);
         border: 1px solid var(--tron-border-cyan);
-        box-shadow: var(--tron-shadow-cyan);
+        box-shadow: 0 0 calc(20px * var(--glow-intensity)) rgba(0, 212, 255, calc(0.3 + 0.5 * var(--glow-intensity)));
         text-align: center;
         max-width: var(--scoreboard-max-width);
         width: 100%;
         animation: tronBorderPulse var(--tron-border-pulse-duration) var(--ease-in-out) infinite;
       }
-      .title {
-        margin-top: 0;
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: var(--space-lg);
+      }
+      .title {
+        margin: 0;
         font-family: var(--font-display);
         font-size: var(--text-title);
         font-weight: var(--text-title-weight);
@@ -33,10 +39,37 @@
         color: var(--tron-cyan);
         animation: tronGlowPulse var(--tron-glow-pulse-duration) var(--ease-in-out) infinite;
       }
+      .reset-btn {
+        font-family: var(--font-display);
+        font-size: var(--text-caption);
+        font-weight: var(--text-caption-weight);
+        letter-spacing: var(--letter-spacing-normal);
+        color: var(--tron-text-muted);
+        background: transparent;
+        border: 1px solid var(--tron-border-cyan);
+        border-radius: var(--radius-sm);
+        padding: var(--space-xs) var(--space-sm);
+        cursor: pointer;
+        transition: color var(--duration-normal), border-color var(--duration-normal), box-shadow var(--duration-normal);
+      }
+      .reset-btn:hover {
+        color: var(--tron-cyan);
+        border-color: var(--tron-cyan);
+        box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      }
       .teams {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr auto 1fr;
         gap: var(--space-lg);
+        align-items: center;
+      }
+      .vs {
+        font-family: var(--font-display);
+        font-size: var(--text-label);
+        font-weight: var(--text-label-weight);
+        letter-spacing: var(--letter-spacing-normal);
+        color: var(--tron-text-muted);
+        text-align: center;
       }
       @media (max-width: 600px) {
         :host {
@@ -44,15 +77,20 @@
         }
         .teams {
           grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto;
         }
       }
     </style>
-    <h1 class="title">CROM SCORE KEEPER</h1>
-    <slot name="draw-message"></slot>
+    <div class="header">
+      <h1 class="title">CROM SCORE KEEPER</h1>
+      <button type="button" class="reset-btn" aria-label="Reset scores">Reset</button>
+    </div>
     <div class="teams">
       <slot name="team-a"></slot>
+      <div class="vs">VS</div>
       <slot name="team-b"></slot>
     </div>
+    <slot name="draw-message"></slot>
   `;
 
   customElements.define('score-board', class ScoreBoard extends HTMLElement {
@@ -60,6 +98,15 @@
       super();
       this.attachShadow({ mode: 'open' });
       this.shadowRoot.appendChild(template.content.cloneNode(true));
+    }
+
+    connectedCallback() {
+      const btn = this.shadowRoot.querySelector('.reset-btn');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          this.dispatchEvent(new CustomEvent('score-reset', { bubbles: true, composed: true }));
+        });
+      }
     }
   });
 })();
