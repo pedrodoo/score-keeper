@@ -3,25 +3,27 @@
   template.innerHTML = `
     <style>
       @keyframes tronGlowPulse {
-        0%, 100% { text-shadow: 0 0 12px rgba(0, 212, 255, 0.8), 0 0 24px rgba(0, 212, 255, 0.5); opacity: 1; }
-        50% { text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 212, 255, 0.7); opacity: 0.95; }
+        0%, 100% { text-shadow: 0 0 calc(12px * var(--glow-size-multiplier, 1)) rgba(0, 212, 255, 0.8), 0 0 calc(24px * var(--glow-size-multiplier, 1)) rgba(0, 212, 255, 0.5); opacity: 1; }
+        50% { text-shadow: 0 0 calc(20px * var(--glow-size-multiplier, 1)) rgba(0, 212, 255, 1), 0 0 calc(40px * var(--glow-size-multiplier, 1)) rgba(0, 212, 255, 0.7); opacity: 0.95; }
       }
       @keyframes tronBorderPulse {
-        0%, 100% { box-shadow: 0 0 calc(20px * var(--glow-intensity, 1)) rgba(0, 212, 255, calc(0.3 + 0.5 * var(--glow-intensity, 1))); }
-        50% { box-shadow: 0 0 calc(30px * var(--glow-intensity, 1)) rgba(0, 212, 255, calc(0.5 + 0.3 * var(--glow-intensity, 1))), 0 0 calc(50px * var(--glow-intensity, 1)) rgba(0, 212, 255, 0.4); }
+        0%, 100% { box-shadow: 0 0 calc(20px * var(--glow-intensity, 1) * var(--glow-size-multiplier, 1)) rgba(0, 212, 255, calc(0.3 + 0.5 * var(--glow-intensity, 1))); }
+        50% { box-shadow: 0 0 calc(30px * var(--glow-intensity, 1) * var(--glow-size-multiplier, 1)) rgba(0, 212, 255, calc(0.5 + 0.3 * var(--glow-intensity, 1))), 0 0 calc(50px * var(--glow-intensity, 1) * var(--glow-size-multiplier, 1)) rgba(0, 212, 255, 0.4); }
       }
       :host {
         display: block;
         --glow-intensity: 1;
+        --glow-size-multiplier: 1;
+        --glow-pulse-duration: 2.5s;
         background: linear-gradient(145deg, var(--tron-bg-secondary) 0%, var(--tron-bg) 100%);
         padding: var(--scoreboard-padding);
         border-radius: var(--radius-xl);
         border: 1px solid var(--tron-border-cyan);
-        box-shadow: 0 0 calc(20px * var(--glow-intensity)) rgba(0, 212, 255, calc(0.3 + 0.5 * var(--glow-intensity)));
+        box-shadow: 0 0 calc(20px * var(--glow-intensity) * var(--glow-size-multiplier)) rgba(0, 212, 255, calc(0.3 + 0.5 * var(--glow-intensity)));
         text-align: center;
         max-width: var(--scoreboard-max-width);
         width: 100%;
-        animation: tronBorderPulse var(--tron-border-pulse-duration) var(--ease-in-out) infinite;
+        animation: tronBorderPulse var(--glow-pulse-duration) var(--ease-in-out) infinite;
       }
       .header {
         display: flex;
@@ -37,7 +39,7 @@
         letter-spacing: var(--letter-spacing-wide);
         text-transform: uppercase;
         color: var(--tron-cyan);
-        animation: tronGlowPulse var(--tron-glow-pulse-duration) var(--ease-in-out) infinite;
+        animation: tronGlowPulse var(--glow-pulse-duration) var(--ease-in-out) infinite;
       }
       .reset-btn {
         font-family: var(--font-display);
@@ -71,6 +73,10 @@
         color: var(--tron-text-muted);
         text-align: center;
       }
+      .draw-message-slot {
+        position: relative;
+        min-height: 0;
+      }
       @media (max-width: 600px) {
         :host {
           padding: var(--space-xl) var(--space-lg);
@@ -90,7 +96,9 @@
       <div class="vs">VS</div>
       <slot name="team-b"></slot>
     </div>
-    <slot name="draw-message"></slot>
+    <div class="draw-message-slot">
+      <slot name="draw-message"></slot>
+    </div>
   `;
 
   customElements.define('score-board', class ScoreBoard extends HTMLElement {

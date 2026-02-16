@@ -55,6 +55,11 @@
     const diff = Math.abs(scoreA - scoreB);
     const intensity = 1 / (1 + diff * 0.25);
     board.style.setProperty('--glow-intensity', String(intensity));
+    // Quanto mais perto, maior e mais rápido o glow; quanto mais longe, mais suave e lento
+    const pulseDuration = 0.85 + 2.65 * (1 - intensity); // 0.85s (perto) → 3.5s (longe)
+    const sizeMultiplier = 0.5 + 1.2 * intensity;        // 0.5 (longe) → 1.7 (perto)
+    board.style.setProperty('--glow-pulse-duration', pulseDuration.toFixed(2) + 's');
+    board.style.setProperty('--glow-size-multiplier', String(sizeMultiplier.toFixed(2)));
   }
 
   function onScoreIncrement(e) {

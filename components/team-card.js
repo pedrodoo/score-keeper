@@ -36,9 +36,13 @@
       }
       .score-wrap {
         margin: 0 0 var(--space-md);
+        min-width: 2.4ch;
+        text-align: center;
       }
       .score {
         display: inline-block;
+        font-variant-numeric: tabular-nums;
+        min-width: 2ch;
         font-family: var(--font-display);
         font-size: var(--text-score);
         font-weight: var(--text-score-weight);

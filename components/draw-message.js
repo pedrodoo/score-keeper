@@ -3,11 +3,17 @@
   template.innerHTML = `
     <style>
       :host {
-        display: none;
-        margin: var(--space-md) 0 0;
+        display: block;
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, 100%);
+        margin-top: var(--space-sm);
+        visibility: hidden;
+        pointer-events: none;
       }
       :host([visible]) {
-        display: block;
+        visibility: visible;
       }
       .message {
         padding: var(--space-sm) var(--space-md);
