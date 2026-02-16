@@ -2,6 +2,14 @@
   const template = document.createElement('template');
   template.innerHTML = `
     <style>
+      @keyframes tronGlowPulse {
+        0%, 100% { text-shadow: 0 0 12px rgba(0, 212, 255, 0.8), 0 0 24px rgba(0, 212, 255, 0.5); opacity: 1; }
+        50% { text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 212, 255, 0.7); opacity: 0.95; }
+      }
+      @keyframes tronBorderPulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+        50% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.8), 0 0 50px rgba(0, 212, 255, 0.4); }
+      }
       :host {
         display: block;
         background: linear-gradient(145deg, var(--tron-bg-secondary) 0%, var(--tron-bg) 100%);
@@ -12,6 +20,7 @@
         text-align: center;
         max-width: var(--scoreboard-max-width);
         width: 100%;
+        animation: tronBorderPulse var(--tron-border-pulse-duration) var(--ease-in-out) infinite;
       }
       .title {
         margin-top: 0;
@@ -22,7 +31,7 @@
         letter-spacing: var(--letter-spacing-wide);
         text-transform: uppercase;
         color: var(--tron-cyan);
-        text-shadow: var(--tron-glow-cyan);
+        animation: tronGlowPulse var(--tron-glow-pulse-duration) var(--ease-in-out) infinite;
       }
       .teams {
         display: grid;
@@ -38,7 +47,7 @@
         }
       }
     </style>
-    <h1 class="title">Score Keeper</h1>
+    <h1 class="title">CROM SCORE KEEPER</h1>
     <slot name="draw-message"></slot>
     <div class="teams">
       <slot name="team-a"></slot>

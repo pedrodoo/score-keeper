@@ -12,6 +12,14 @@
         background: rgba(0, 212, 255, 0.05);
         text-align: center;
       }
+      :host([theme="blue"]) .card {
+        border-color: var(--team-blue-border);
+        background: var(--team-blue-bg);
+      }
+      :host([theme="red"]) .card {
+        border-color: var(--team-red-border);
+        background: var(--team-red-bg);
+      }
       .name {
         margin: 0 0 var(--space-sm);
         font-family: var(--font-display);
@@ -19,6 +27,12 @@
         font-weight: var(--text-label-weight);
         letter-spacing: var(--letter-spacing-normal);
         color: var(--tron-text);
+      }
+      :host([theme="blue"]) .name {
+        color: var(--team-blue-primary);
+      }
+      :host([theme="red"]) .name {
+        color: var(--team-red-primary);
       }
       .score-wrap {
         margin: 0 0 var(--space-md);
@@ -31,6 +45,14 @@
         letter-spacing: var(--letter-spacing-normal);
         color: var(--tron-cyan);
         text-shadow: var(--tron-glow-cyan);
+      }
+      :host([theme="blue"]) .score {
+        color: var(--team-blue-primary);
+        text-shadow: var(--team-blue-glow);
+      }
+      :host([theme="red"]) .score {
+        color: var(--team-red-primary);
+        text-shadow: var(--team-red-glow);
       }
       .buttons {
         display: flex;
@@ -52,7 +74,7 @@
 
   customElements.define('team-card', class TeamCard extends HTMLElement {
     static get observedAttributes() {
-      return ['name', 'team-id', 'score'];
+      return ['name', 'team-id', 'score', 'theme'];
     }
 
     constructor() {
@@ -66,13 +88,24 @@
 
     connectedCallback() {
       this._updateContent();
+      this._syncTeamThemeToButtons();
       this.shadowRoot.querySelectorAll('score-button').forEach((btn) => {
         btn.addEventListener('score-button-click', (e) => this._onButtonClick(e));
       });
     }
 
-    attributeChangedCallback() {
+    attributeChangedCallback(name) {
       this._updateContent();
+      if (name === 'theme') {
+        this._syncTeamThemeToButtons();
+      }
+    }
+
+    _syncTeamThemeToButtons() {
+      const theme = this.getAttribute('theme') || 'blue';
+      this.shadowRoot.querySelectorAll('score-button').forEach((btn) => {
+        btn.setAttribute('team-theme', theme);
+      });
     }
 
     _updateContent() {

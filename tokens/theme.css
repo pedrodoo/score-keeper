@@ -6,7 +6,7 @@
   /* Colors */
   --tron-bg: #0a0e17;
   --tron-bg-secondary: #0d1117;
-  --tron-grid: rgba(0, 212, 255, 0.15);
+  --tron-grid: rgba(0, 212, 255, 0.2);
   --tron-cyan: #00d4ff;
   --tron-cyan-bright: #00f0ff;
   --tron-amber: #ff9e00;
@@ -14,13 +14,34 @@
   --tron-text: #e6edf3;
   --tron-text-muted: #8b949e;
 
-  /* Neon / glow */
-  --tron-glow-cyan: 0 0 10px rgba(0, 212, 255, 0.6), 0 0 20px rgba(0, 212, 255, 0.4);
-  --tron-glow-amber: 0 0 10px rgba(255, 158, 0, 0.6), 0 0 20px rgba(255, 158, 0, 0.4);
-  --tron-shadow-cyan: 0 0 15px rgba(0, 212, 255, 0.5);
-  --tron-shadow-amber: 0 0 15px rgba(255, 158, 0, 0.5);
-  --tron-border-cyan: rgba(0, 212, 255, 0.5);
-  --tron-border-amber: rgba(255, 158, 0, 0.5);
+  /* Neon / glow – stronger Legacy style */
+  --tron-glow-cyan: 0 0 12px rgba(0, 212, 255, 0.8), 0 0 24px rgba(0, 212, 255, 0.5);
+  --tron-glow-amber: 0 0 12px rgba(255, 158, 0, 0.8), 0 0 24px rgba(255, 158, 0, 0.5);
+  --tron-shadow-cyan: 0 0 20px rgba(0, 212, 255, 0.6);
+  --tron-shadow-amber: 0 0 20px rgba(255, 158, 0, 0.6);
+  --tron-border-cyan: rgba(0, 212, 255, 0.6);
+  --tron-border-amber: rgba(255, 158, 0, 0.6);
+
+  /* Team Blue – TRON Legacy cyan/blue */
+  --team-blue-primary: #00d4ff;
+  --team-blue-primary-bright: #00f0ff;
+  --team-blue-bg: rgba(0, 212, 255, 0.08);
+  --team-blue-border: rgba(0, 212, 255, 0.6);
+  --team-blue-glow: 0 0 12px rgba(0, 212, 255, 0.8), 0 0 24px rgba(0, 212, 255, 0.5);
+  --team-blue-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+
+  /* Team Red – neon antagonist style */
+  --team-red-primary: #ff3366;
+  --team-red-primary-bright: #ff5588;
+  --team-red-bg: rgba(255, 51, 102, 0.08);
+  --team-red-border: rgba(255, 51, 102, 0.6);
+  --team-red-glow: 0 0 12px rgba(255, 51, 102, 0.8), 0 0 24px rgba(255, 51, 102, 0.5);
+  --team-red-shadow: 0 0 20px rgba(255, 51, 102, 0.6);
+
+  /* Animation tokens */
+  --tron-glow-pulse-duration: 2s;
+  --tron-border-pulse-duration: 2.5s;
+  --tron-grid-pulse-duration: 4s;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -62,4 +83,34 @@
   --scoreboard-max-width: 520px;
   --team-card-padding: var(--space-md) var(--space-lg);
   --scoreboard-padding: var(--space-2xl) var(--space-3xl);
+}
+
+/* Shared keyframes for TRON Legacy neon animations */
+@keyframes tronGlowPulse {
+  0%, 100% {
+    text-shadow: 0 0 12px rgba(0, 212, 255, 0.8), 0 0 24px rgba(0, 212, 255, 0.5);
+    opacity: 1;
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 212, 255, 0.7);
+    opacity: 0.95;
+  }
+}
+
+@keyframes tronBorderPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.8), 0 0 50px rgba(0, 212, 255, 0.4);
+  }
+}
+
+@keyframes gridPulse {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }

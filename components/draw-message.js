@@ -17,16 +17,16 @@
         font-size: 1.75rem;
         letter-spacing: var(--letter-spacing-normal);
         text-transform: uppercase;
-        background: linear-gradient(90deg, rgba(0, 212, 255, 0.15), rgba(255, 158, 0, 0.15));
-        border: 1px solid var(--tron-border-cyan);
+        background: linear-gradient(90deg, rgba(0, 212, 255, 0.2), rgba(255, 51, 102, 0.2));
+        border: 1px solid rgba(0, 212, 255, 0.5);
         color: var(--tron-text);
-        text-shadow: var(--tron-glow-cyan);
-        box-shadow: var(--tron-shadow-cyan);
-        animation: drawPulse var(--duration-slow) var(--ease-in-out) infinite alternate;
+        text-shadow: 0 0 12px rgba(0, 212, 255, 0.8), 0 0 12px rgba(255, 51, 102, 0.6);
+        box-shadow: 0 0 25px rgba(0, 212, 255, 0.5), 0 0 25px rgba(255, 51, 102, 0.4);
+        animation: drawPulse var(--tron-glow-pulse-duration) var(--ease-in-out) infinite alternate;
       }
       @keyframes drawPulse {
-        from { transform: scale(1); }
-        to { transform: scale(1.03); }
+        0% { transform: scale(1); box-shadow: 0 0 25px rgba(0, 212, 255, 0.5), 0 0 25px rgba(255, 51, 102, 0.4); }
+        100% { transform: scale(1.04); box-shadow: 0 0 35px rgba(0, 212, 255, 0.8), 0 0 35px rgba(255, 51, 102, 0.6); }
       }
     </style>
     <div class="message" role="status" aria-live="polite">

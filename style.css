@@ -9,10 +9,30 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--tron-text);
-  /* TRON grid: subtle line pattern */
+  /* TRON Legacy grid: more visible lines */
   background-image:
     linear-gradient(var(--tron-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--tron-grid) 1px, transparent 1px);
   background-size: 24px 24px;
   background-color: var(--tron-bg);
+  position: relative;
+}
+
+/* Optional: subtle grid pulse animation */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  animation: gridPulse var(--tron-grid-pulse-duration) var(--ease-in-out) infinite;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }

@@ -17,25 +17,41 @@
         color: #0a0e17;
       }
       button:hover {
-        transform: translateY(-1px);
+        transform: translateY(-2px);
       }
       button:active {
         transform: translateY(0);
         box-shadow: none;
       }
+      /* Increment: fallback cyan when no team-theme */
       :host([direction="increment"]) button {
         background: var(--tron-cyan);
         box-shadow: var(--tron-glow-cyan);
       }
       :host([direction="increment"]) button:hover {
-        box-shadow: 0 0 15px rgba(0, 212, 255, 0.8), 0 0 25px rgba(0, 212, 255, 0.5);
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.9), 0 0 35px rgba(0, 212, 255, 0.6);
       }
+      :host([direction="increment"][team-theme="blue"]) button {
+        background: var(--team-blue-primary);
+        box-shadow: var(--team-blue-glow);
+      }
+      :host([direction="increment"][team-theme="blue"]) button:hover {
+        box-shadow: 0 0 22px rgba(0, 212, 255, 0.95), 0 0 40px rgba(0, 212, 255, 0.6);
+      }
+      :host([direction="increment"][team-theme="red"]) button {
+        background: var(--team-red-primary);
+        box-shadow: var(--team-red-glow);
+      }
+      :host([direction="increment"][team-theme="red"]) button:hover {
+        box-shadow: 0 0 22px rgba(255, 51, 102, 0.95), 0 0 40px rgba(255, 51, 102, 0.6);
+      }
+      /* Decrement: amber for all */
       :host([direction="decrement"]) button {
         background: var(--tron-amber);
         box-shadow: var(--tron-glow-amber);
       }
       :host([direction="decrement"]) button:hover {
-        box-shadow: 0 0 15px rgba(255, 158, 0, 0.8), 0 0 25px rgba(255, 158, 0, 0.5);
+        box-shadow: 0 0 20px rgba(255, 158, 0, 0.9), 0 0 35px rgba(255, 158, 0, 0.6);
       }
     </style>
     <button type="button" aria-label=""><span class="label"></span></button>
@@ -43,7 +59,7 @@
 
   customElements.define('score-button', class ScoreButton extends HTMLElement {
     static get observedAttributes() {
-      return ['direction', 'label'];
+      return ['direction', 'label', 'team-theme'];
     }
 
     constructor() {
@@ -61,7 +77,7 @@
     }
 
     attributeChangedCallback(name) {
-      if (name === 'label' || name === 'direction') {
+      if (name === 'label' || name === 'direction' || name === 'team-theme') {
         this._updateLabel();
         this._updateAriaLabel();
       }
