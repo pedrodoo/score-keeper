@@ -32,7 +32,37 @@ body::before {
   z-index: 0;
 }
 
-body > * {
-  position: relative;
+#streamlines-layer {
+  position: fixed;
+  inset: 0;
   z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.streamline {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150vmax;
+  height: 2px;
+  margin-left: -75vmax;
+  margin-top: -1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.6), transparent);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+  transform: rotate(var(--streamline-angle, 0deg)) translateX(-100%);
+  animation: streamlineCross var(--streamline-duration, 4s) linear forwards;
+  animation-delay: var(--streamline-delay, 0s);
+  opacity: 0.7;
+}
+
+@keyframes streamlineCross {
+  to {
+    transform: rotate(var(--streamline-angle, 0deg)) translateX(100%);
+  }
+}
+
+.scoreboard-wrapper {
+  position: relative;
+  z-index: 2;
 }

@@ -29,14 +29,18 @@
 
   function updateDrawMessage() {
     if (!drawMessage) return;
-    if (scoreA === scoreB && scoreA > 0) {
+    const isDraw = scoreA === scoreB && scoreA > 0;
+    const wasVisible = drawMessage.hasAttribute('visible');
+    if (isDraw) {
       drawMessage.setAttribute('visible', '');
+      if (!wasVisible && window.audioManager) window.audioManager.playSfx('draw');
     } else {
       drawMessage.removeAttribute('visible');
     }
   }
 
   function onScoreIncrement(e) {
+    if (window.audioManager) window.audioManager.playSfx('clickIncrement');
     const teamId = e.detail && e.detail.teamId;
     if (teamId === 'a') {
       scoreA++;
@@ -50,6 +54,7 @@
   }
 
   function onScoreDecrement(e) {
+    if (window.audioManager) window.audioManager.playSfx('clickDecrement');
     const teamId = e.detail && e.detail.teamId;
     if (teamId === 'a') {
       if (scoreA > 0) {
