@@ -1,0 +1,65 @@
+/**
+ * TRON Legacy design tokens
+ * Single source of truth for colors, spacing, typography, motion, layout
+ */
+:root {
+  /* Colors */
+  --tron-bg: #0a0e17;
+  --tron-bg-secondary: #0d1117;
+  --tron-grid: rgba(0, 212, 255, 0.15);
+  --tron-cyan: #00d4ff;
+  --tron-cyan-bright: #00f0ff;
+  --tron-amber: #ff9e00;
+  --tron-amber-bright: #ffb627;
+  --tron-text: #e6edf3;
+  --tron-text-muted: #8b949e;
+
+  /* Neon / glow */
+  --tron-glow-cyan: 0 0 10px rgba(0, 212, 255, 0.6), 0 0 20px rgba(0, 212, 255, 0.4);
+  --tron-glow-amber: 0 0 10px rgba(255, 158, 0, 0.6), 0 0 20px rgba(255, 158, 0, 0.4);
+  --tron-shadow-cyan: 0 0 15px rgba(0, 212, 255, 0.5);
+  --tron-shadow-amber: 0 0 15px rgba(255, 158, 0, 0.5);
+  --tron-border-cyan: rgba(0, 212, 255, 0.5);
+  --tron-border-amber: rgba(255, 158, 0, 0.5);
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 2.5rem;
+  --space-3xl: 3rem;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+
+  /* Typography */
+  --font-display: "Orbitron", "Segoe UI", system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-score: 3rem;
+  --text-score-weight: 900;
+  --text-label: 1.6rem;
+  --text-label-weight: 800;
+  --text-title: 1.4rem;
+  --text-title-weight: 700;
+  --text-caption: 0.95rem;
+  --text-caption-weight: 600;
+  --letter-spacing-wide: 0.08em;
+  --letter-spacing-normal: 0.03em;
+
+  /* Motion */
+  --duration-fast: 0.08s;
+  --duration-normal: 0.2s;
+  --duration-slow: 0.35s;
+  --ease-out: ease-out;
+  --ease-in-out: ease-in-out;
+
+  /* Layout */
+  --scoreboard-max-width: 520px;
+  --team-card-padding: var(--space-md) var(--space-lg);
+  --scoreboard-padding: var(--space-2xl) var(--space-3xl);
+}

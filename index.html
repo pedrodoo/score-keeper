@@ -3,38 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Score Keeper</title>
+    <title>Score Keeper – TRON</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens/theme.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="scoreboard">
-        <h1>Score Keeper</h1>
+    <score-board>
+        <draw-message slot="draw-message">Oh lordy lord, it's a draw!</draw-message>
+        <team-card slot="team-a" name="Equipa A" team-id="a" score="0"></team-card>
+        <team-card slot="team-b" name="Equipa B" team-id="b" score="0"></team-card>
+    </score-board>
 
-        <div id="draw-message" class="draw-message" role="status" aria-live="polite">
-            Oh lordy lord, it's a draw!
-        </div>
-
-        <div class="teams">
-            <section id="team-a">
-                <h2>Benfica</h2>
-                <p><span id="score-a" aria-live="polite">0</span></p>
-                <div class="buttons">
-                    <button id="increment-a">+1</button>
-                    <button id="decrement-a">-1</button>
-                </div>
-            </section>
-
-            <section id="team-b">
-                <h2>Sporting</h2>
-                <p><span id="score-b" aria-live="polite">0</span></p>
-                <div class="buttons">
-                    <button id="increment-b">+1</button>
-                    <button id="decrement-b">-1</button>
-                </div>
-            </section>
-        </div>
-    </div>
-
+    <script src="components/score-button.js"></script>
+    <script src="components/team-card.js"></script>
+    <script src="components/draw-message.js"></script>
+    <script src="components/score-board.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

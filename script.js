@@ -1,85 +1,76 @@
-const drawMessageElement = document.getElementById('draw-message');
+(function () {
+  const board = document.querySelector('score-board');
+  const teamA = document.querySelector('team-card[team-id="a"]');
+  const teamB = document.querySelector('team-card[team-id="b"]');
+  const drawMessage = document.querySelector('draw-message');
 
-// Team A
-const scoreAElement = document.getElementById('score-a');
-const incrementAButton = document.getElementById('increment-a');
-const decrementAButton = document.getElementById('decrement-a');
-let scoreA = 0;
+  let scoreA = 0;
+  let scoreB = 0;
 
-// Team B
-const scoreBElement = document.getElementById('score-b');
-const incrementBButton = document.getElementById('increment-b');
-const decrementBButton = document.getElementById('decrement-b');
-let scoreB = 0;
-
-function saveScores() {
+  function saveScores() {
     localStorage.setItem('scoreA', scoreA.toString());
     localStorage.setItem('scoreB', scoreB.toString());
-}
+  }
 
-function loadScores() {
+  function loadScores() {
     const storedA = localStorage.getItem('scoreA');
     const storedB = localStorage.getItem('scoreB');
 
     if (storedA !== null) {
-        scoreA = parseInt(storedA, 10) || 0;
-        scoreAElement.textContent = scoreA;
+      scoreA = parseInt(storedA, 10) || 0;
+      if (teamA) teamA.setAttribute('score', scoreA);
     }
-
     if (storedB !== null) {
-        scoreB = parseInt(storedB, 10) || 0;
-        scoreBElement.textContent = scoreB;
+      scoreB = parseInt(storedB, 10) || 0;
+      if (teamB) teamB.setAttribute('score', scoreB);
     }
-
     updateDrawMessage();
-}
+  }
 
-function updateDrawMessage() {
+  function updateDrawMessage() {
+    if (!drawMessage) return;
     if (scoreA === scoreB && scoreA > 0) {
-        drawMessageElement.classList.add('show');
+      drawMessage.setAttribute('visible', '');
     } else {
-        drawMessageElement.classList.remove('show');
+      drawMessage.removeAttribute('visible');
     }
-}
+  }
 
-function incrementScoreA() {
-    scoreA++;
-    scoreAElement.textContent = scoreA;
+  function onScoreIncrement(e) {
+    const teamId = e.detail && e.detail.teamId;
+    if (teamId === 'a') {
+      scoreA++;
+      if (teamA) teamA.setAttribute('score', scoreA);
+    } else {
+      scoreB++;
+      if (teamB) teamB.setAttribute('score', scoreB);
+    }
     saveScores();
     updateDrawMessage();
-}
+  }
 
-function decrementScoreA() {
-    if (scoreA > 0) {
+  function onScoreDecrement(e) {
+    const teamId = e.detail && e.detail.teamId;
+    if (teamId === 'a') {
+      if (scoreA > 0) {
         scoreA--;
-        scoreAElement.textContent = scoreA;
-        saveScores();
-        updateDrawMessage();
+        if (teamA) teamA.setAttribute('score', scoreA);
+      }
+    } else {
+      if (scoreB > 0) {
+        scoreB--;
+        if (teamB) teamB.setAttribute('score', scoreB);
+      }
     }
-}
-
-function incrementScoreB() {
-    scoreB++;
-    scoreBElement.textContent = scoreB;
     saveScores();
     updateDrawMessage();
-}
+  }
 
-function decrementScoreB() {
-    if (scoreB > 0) {
-        scoreB--;
-        scoreBElement.textContent = scoreB;
-        saveScores();
-        updateDrawMessage();
-    }
-}
+  if (board) {
+    board.addEventListener('score-increment', onScoreIncrement);
+    board.addEventListener('score-decrement', onScoreDecrement);
+  }
 
-incrementAButton.addEventListener('click', incrementScoreA);
-decrementAButton.addEventListener('click', decrementScoreA);
-incrementBButton.addEventListener('click', incrementScoreB);
-decrementBButton.addEventListener('click', decrementScoreB);
-
-// Load saved scores when the page loads
-loadScores();
-updateDrawMessage();
-
+  loadScores();
+  updateDrawMessage();
+})();
