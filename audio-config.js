@@ -1,13 +1,11 @@
 /**
  * TRON Score Keeper – Audio URLs
  *
- * Replace with your own files in assets/audio/ or use URLs from:
- * - Pixabay: https://pixabay.com/sound-effects/ (search: "synth ambient", "sci-fi blip", "electronic sweep", "fanfare short")
- * - Freesound: https://freesound.org/ (search: "synth pad", "ui beep", "sci-fi")
- * - 100 CC0 SFX (direct MP3): https://github.com/korlibs/korge-free-sfx/tree/main/100-CC0-SFX
+ * Background: "Amb – Ambient Music Loop" by Alexander (Orange Free Sounds),
+ * CC BY 4.0 – https://orangefreesounds.com/amb-ambient-music-loop/
  *
- * For local files, place MP3s in assets/audio/ and use paths below.
- * For external URLs, ensure CORS is allowed or use same-origin hosting.
+ * Replace with your own files in assets/audio/ or use URLs from:
+ * - Pixabay, Freesound, 100 CC0 SFX: https://github.com/korlibs/korge-free-sfx/tree/main/100-CC0-SFX
  */
 const AUDIO_CONFIG = {
   background: 'assets/audio/bg.mp3',

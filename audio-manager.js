@@ -15,11 +15,21 @@
     return a;
   }
 
+  function startBackground() {
+    if (backgroundAudio && backgroundAudio.src && unlocked) {
+      backgroundAudio.play().catch(() => {});
+    }
+  }
+
   function preload() {
     if (typeof AUDIO_CONFIG === 'undefined') return;
     backgroundAudio = createAudio(AUDIO_CONFIG.background);
     backgroundAudio.loop = true;
     backgroundAudio.volume = backgroundVolume;
+    backgroundAudio.addEventListener('canplaythrough', function onReady() {
+      backgroundAudio.removeEventListener('canplaythrough', onReady);
+      startBackground();
+    });
     ['sfxClickIncrement', 'sfxClickDecrement', 'sfxDraw'].forEach((key) => {
       const src = AUDIO_CONFIG[key];
       if (src) sfx[key] = createAudio(src);
@@ -29,13 +39,11 @@
   function unlock() {
     if (unlocked) return;
     unlocked = true;
-    if (backgroundAudio && backgroundAudio.src) {
-      backgroundAudio.play().catch(() => {});
-    }
+    startBackground();
   }
 
   function playSfx(type) {
-    if (!unlocked) return;
+    if (!unlocked) unlock();
     const key = type === 'clickIncrement' ? 'sfxClickIncrement' : type === 'clickDecrement' ? 'sfxClickDecrement' : type === 'draw' ? 'sfxDraw' : null;
     const a = key ? sfx[key] : null;
     if (!a || !a.src) return;
@@ -46,9 +54,7 @@
   }
 
   function playBackground() {
-    if (backgroundAudio && backgroundAudio.src && unlocked) {
-      backgroundAudio.play().catch(() => {});
-    }
+    startBackground();
   }
 
   function pauseBackground() {
